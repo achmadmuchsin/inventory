@@ -1,4 +1,4 @@
-# Sistem-informasi-keuangan
+# Sistem Informasi Manajemen Informasi Keuangan
 
 ## Demo Beranda :
 
