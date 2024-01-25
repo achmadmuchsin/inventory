@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.9
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2019 at 08:11 AM
--- Server version: 10.1.31-MariaDB
--- PHP Version: 7.2.3
+-- Generation Time: Jan 25, 2024 at 09:47 AM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 7.3.29
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,27 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `keuangan`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `id_admin` int(11) NOT NULL,
-  `nama` varchar(40) NOT NULL,
-  `email` varchar(40) NOT NULL,
-  `pass` varchar(40) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `admin`
---
-
-INSERT INTO `admin` (`id_admin`, `nama`, `email`, `pass`) VALUES
-(1, 'saiful', 'saiful@mail.com', 'tes123'),
-(2, 'riza', 'riza@mail.com', 'tes123');
 
 -- --------------------------------------------------------
 
@@ -94,7 +72,6 @@ INSERT INTO `hutang` (`id_hutang`, `jumlah`, `tgl_hutang`, `alasan`, `penghutang
 (11, 120000, '2019-10-25', 'arifinal', 'untuk beli hosting'),
 (12, 2500000, '2019-10-26', 'azir', 'untuk beli hosting'),
 (13, 70000, '2019-10-25', 'Riza', 'Mau jalan jalan'),
-(14, 50000, '0000-00-00', 'Riza', 'Beli rokok'),
 (15, 40000, '2019-10-27', 'Riza', 'Uang Bensi'),
 (16, 80000, '2019-10-28', 'Riza', 'Mau Nikahan'),
 (17, 1000000, '2019-10-29', 'Riza', 'Biaya lahiran anak');
@@ -111,16 +88,45 @@ CREATE TABLE `karyawan` (
   `posisi` varchar(40) NOT NULL,
   `alamat` varchar(40) NOT NULL,
   `umur` int(11) NOT NULL,
-  `kontak` varchar(40) NOT NULL
+  `kontak` varchar(40) NOT NULL,
+  `cabang` varchar(40) NOT NULL,
+  `id_cabang` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama`, `posisi`, `alamat`, `umur`, `kontak`) VALUES
-(1, 'saiful', 'ketua', 'mns.aron', 19, '0888888'),
-(6, 'Riza', 'Bendahara', 'Aceh', 19, '08333333333');
+INSERT INTO `karyawan` (`id_karyawan`, `nama`, `posisi`, `alamat`, `umur`, `kontak`, `cabang`, `id_cabang`) VALUES
+(7, 'ahmad', 'HRD', 'jl. in aja dulu', 25, '3', 'Duri', 0),
+(10, 'Fitri', 'HRD', 'Jl. Rambutan no. 6', 40, '08123376345', 'Pekanbaru', 0),
+(11, 'Fitri', 'HRD', 'jl. durian', 32, '08123376345', 'Dumai', 0),
+(12, 'Muchsin', 'HRD', 'jl. in aja dulu', 23, '08123376345', 'Pekanbaru', 0),
+(13, 'rahmad', 'HRD', 'jl. in aja dulu', 23, '08123376345', 'Pekanbaru', 4),
+(14, '', 'HRD', 'jl. durian', 23, '08123376345', '', 3),
+(15, 'Nur', 'HRD', 'jl. in aja dulu', 25, '08123376345', '', 3),
+(16, 'Anton', 'Kepala Pimpinan', 'jl. hangtuah no.132', 42, '08123123', '', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kota_cabang`
+--
+
+CREATE TABLE `kota_cabang` (
+  `id` int(11) NOT NULL,
+  `nama_kota` varchar(40) NOT NULL,
+  `alamat` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kota_cabang`
+--
+
+INSERT INTO `kota_cabang` (`id`, `nama_kota`, `alamat`) VALUES
+(3, 'Dumai', 'Jl. Kebangsaan No.125'),
+(4, 'Pekanbaru', 'Jl. Soebrantas no.12'),
+(5, 'Duri', 'jl. hangtuah no.132');
 
 -- --------------------------------------------------------
 
@@ -140,11 +146,6 @@ CREATE TABLE `pemasukan` (
 --
 
 INSERT INTO `pemasukan` (`id_pemasukan`, `tgl_pemasukan`, `jumlah`, `id_sumber`) VALUES
-(1, '2019-10-16', 100000, 1),
-(2, '2019-10-24', 500000, 1),
-(3, '2019-10-17', 200000, 5),
-(4, '2019-10-18', 400000, 3),
-(5, '2019-10-19', 5000000, 1),
 (6, '2019-10-20', 100000, 4),
 (7, '2019-10-21', 2300000, 3),
 (8, '2019-10-22', 2000000, 2),
@@ -160,7 +161,13 @@ INSERT INTO `pemasukan` (`id_pemasukan`, `tgl_pemasukan`, `jumlah`, `id_sumber`)
 (20, '2019-10-28', 590000, 3),
 (21, '2019-10-29', 600000, 4),
 (22, '2019-10-30', 600000, 5),
-(23, '2019-10-25', 7000000, 1);
+(23, '2019-10-25', 7000000, 1),
+(24, '2024-01-15', 15000000, 1),
+(25, '2024-01-22', 2000000, 1),
+(26, '2024-01-23', 1200000, 3),
+(27, '2024-01-23', 1000000, 1),
+(28, '2024-01-23', 1500000, 3),
+(29, '2024-01-25', 600000, 3);
 
 -- --------------------------------------------------------
 
@@ -197,7 +204,35 @@ INSERT INTO `pengeluaran` (`id_pengeluaran`, `tgl_pengeluaran`, `jumlah`, `id_su
 (16, '2019-10-26', 70000, 7),
 (17, '2019-10-27', 60000, 8),
 (18, '2019-10-28', 78000, 9),
-(19, '2019-10-29', 79000, 10);
+(19, '2019-10-29', 79000, 10),
+(20, '2024-01-15', 2000000, 7),
+(21, '2024-01-22', 450000, 7),
+(22, '2024-01-23', 500000, 7),
+(23, '0000-00-00', 1300000, 0),
+(24, '2024-01-23', 1300000, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengguna`
+--
+
+CREATE TABLE `pengguna` (
+  `id_admin` int(11) NOT NULL,
+  `nama` varchar(40) NOT NULL,
+  `email` varchar(40) NOT NULL,
+  `pass` varchar(40) NOT NULL,
+  `level` enum('admin','manager','unit') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `pengguna`
+--
+
+INSERT INTO `pengguna` (`id_admin`, `nama`, `email`, `pass`, `level`) VALUES
+(1, 'Achmad Muchsin', 'muchsin@gmail.com', '12345', 'admin'),
+(2, 'ahmad', 'ahmad@mail.com', 'tes123', 'manager'),
+(3, 'Fitri', 'fitri@gmail.com', '12345', 'unit');
 
 -- --------------------------------------------------------
 
@@ -224,7 +259,9 @@ INSERT INTO `sumber` (`id_sumber`, `nama`) VALUES
 (7, 'Hosting'),
 (8, 'Listrik'),
 (9, 'Air'),
-(10, 'Wifi');
+(10, 'Wifi'),
+(11, 'Kerikil'),
+(12, 'Aspal');
 
 -- --------------------------------------------------------
 
@@ -253,12 +290,6 @@ INSERT INTO `uang` (`id_uang`, `tgl_uang`, `id_pengeluaran`, `id_pendapatan`, `j
 --
 
 --
--- Indexes for table `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id_admin`);
-
---
 -- Indexes for table `catatan`
 --
 ALTER TABLE `catatan`
@@ -277,6 +308,12 @@ ALTER TABLE `karyawan`
   ADD PRIMARY KEY (`id_karyawan`);
 
 --
+-- Indexes for table `kota_cabang`
+--
+ALTER TABLE `kota_cabang`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
@@ -289,6 +326,12 @@ ALTER TABLE `pemasukan`
 ALTER TABLE `pengeluaran`
   ADD PRIMARY KEY (`id_pengeluaran`),
   ADD KEY `id_sumber` (`id_sumber`);
+
+--
+-- Indexes for table `pengguna`
+--
+ALTER TABLE `pengguna`
+  ADD PRIMARY KEY (`id_admin`);
 
 --
 -- Indexes for table `sumber`
@@ -307,12 +350,6 @@ ALTER TABLE `uang`
 --
 
 --
--- AUTO_INCREMENT for table `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
 -- AUTO_INCREMENT for table `catatan`
 --
 ALTER TABLE `catatan`
@@ -328,25 +365,37 @@ ALTER TABLE `hutang`
 -- AUTO_INCREMENT for table `karyawan`
 --
 ALTER TABLE `karyawan`
-  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_karyawan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `kota_cabang`
+--
+ALTER TABLE `kota_cabang`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `pemasukan`
 --
 ALTER TABLE `pemasukan`
-  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_pemasukan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `pengeluaran`
 --
 ALTER TABLE `pengeluaran`
-  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_pengeluaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+
+--
+-- AUTO_INCREMENT for table `pengguna`
+--
+ALTER TABLE `pengguna`
+  MODIFY `id_admin` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sumber`
 --
 ALTER TABLE `sumber`
-  MODIFY `id_sumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_sumber` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `uang`
